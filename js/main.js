@@ -71,7 +71,6 @@
             isRepulsor : null,
             min : null,
             max : null,
-            maxLimit : null,
             init : function (pointA, pointB, rigidity, min, max, isRepulsor) {
                 this.pointA = pointA;
                 this.pointB = pointB;
@@ -79,7 +78,6 @@
                 this.isRepulsor = isRepulsor;
                 this.min = min;
                 this.max = max;
-                this.maxLimit = this.max + 10;
             },
             getEnergyVector : function () {
                 //get the distance
@@ -87,18 +85,22 @@
                     energy = 0,
                     energyVector = null;
                 
-                if (distance >= this.min && distance <= this.max) {
-                    energy = Math.pow(distance, 2) * this.rigidity;
-                    
-                    energyVector = new Vector(this.pointA.x - this.pointB.x, this.pointA.y - this.pointB.y);
-                    energyVector = energyVector.unitary();
-                    energyVector = energyVector.multiply(energy);
-                } else if (this.isRepulsor && distance > this.max && distance <= this.maxLimit) {
-                    energy = Math.pow(10 - (this.max - distance), 2) * this.rigidity;
-                    
-                    energyVector = new Vector(this.pointA.x - this.pointB.x, this.pointA.y - this.pointB.y);
-                    energyVector = energyVector.unitary();
-                    energyVector = energyVector.multiply(energy);
+                if (this.isRepulsor) {
+                    if (distance <= this.max) {
+                        energy = -Math.pow((distance / this.max), 2) * this.rigidity + this.rigidity;
+                        
+                        energyVector = new Vector(this.pointA.x - this.pointB.x, this.pointA.y - this.pointB.y);
+                        energyVector = energyVector.unitary();
+                        energyVector = energyVector.multiply(energy);
+                    }
+                } else {
+                    if (distance >= this.min && distance <= this.max) {
+                        energy = Math.pow(distance, 2) * this.rigidity;
+                        
+                        energyVector = new Vector(this.pointA.x - this.pointB.x, this.pointA.y - this.pointB.y);
+                        energyVector = energyVector.unitary();
+                        energyVector = energyVector.multiply(energy);
+                    }
                 }
                 
                 return energyVector;
@@ -143,7 +145,7 @@
                 //add the spring for the cursor
                 
                 this.springs.push(
-                    new Spring(this.position, myCursorPosition, 0.002, 1, 50, true)
+                    new Spring(this.position, myCursorPosition, 3, 1, 50, true)
                 );
                 
                 
@@ -241,7 +243,7 @@
     PixelObject.prototype = PixelObjectProto;
     Cake.prototype = CakeProto;
     
-    myContainer = document.getElementById('main');
+    myContainer = document.getElementById('my-container');
     myImage = document.getElementById('my-image');
     myCanvas = document.getElementById('my-canvas');
     mouseIndicator = document.getElementById('mouse-indicator');
@@ -261,7 +263,7 @@
     //launch the update function
     window.setInterval(function () {
         myCake.updatePixelsPosition();
-    }, 16);
+    }, 25);
     
     
 }());

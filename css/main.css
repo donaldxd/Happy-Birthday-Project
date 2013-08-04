@@ -8,15 +8,22 @@ body{
     background: #555;
 }
 #main{
-    position: absolute;
+    position: relative;
     width: 500px;
-    height: 500px;
-    top: 50%;
-    left: 50%;
-    margin: -250px;
+    margin: 10px auto;
     background: #fff;
     box-shadow: 0 0 15px #000;
 }
+#main-footer{
+    text-align: center;
+    padding: 20px 0;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+}
+#my-container{
+    height: 500px;
+}
+
 #my-image,
 #my-canvas{
     position: absolute;
