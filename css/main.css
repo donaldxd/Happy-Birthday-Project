@@ -1,0 +1,41 @@
+html,
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background: #555;
+}
+#main{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin: -250px;
+    background: #fff;
+    box-shadow: 0 0 15px #000;
+}
+#my-image,
+#my-canvas{
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.pixel{
+    position: absolute;
+    /*
+    -webkit-transition: 100ms all;
+    -moz-transition: 100ms all;
+    -ms-transition: 100ms all;
+    -o-transition: 100ms all;
+    transition: 100ms all;
+    */
+}
+#mouse-indicator{
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #f00;
+}
